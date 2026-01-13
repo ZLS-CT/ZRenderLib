@@ -236,8 +236,10 @@ export const splitText = (text, maxWidth) => {
     throw new Error("splitText is not supported in legacy mode")
 }
 export const enableScaledScissor = (drawContext, x, y, width, height) => {
-    const screenScale = GetScreen().getScale()
-    enableScissor(drawContext, x * screenScale, y * screenScale, width * screenScale, height * screenScale)
+    const screen = GetScreen()
+    const screenHeight = screen.getHeight()
+    const screenScale = screen.getScale()
+    enableScissor(drawContext, x * screenScale, (screenHeight - (y + height)) * screenScale, width * screenScale, height * screenScale)
 }
 export const enableScissor = (drawContext, x, y, width, height) => {
     let args = []
