@@ -27,9 +27,10 @@ const versionToInt = (version) => {
     )
 }
 
+const ForgeVersion = Java.type("net.minecraftforge.common.ForgeVersion")
 let _gameVersion = Client.getVersion()
-if (_gameVersion.includes("1.8.9")) {
-    _gameVersion = "1.8.9"
+if (Object.keys(ForgeVersion).length > 0) {
+    _gameVersion = ForgeVersion.mcVersion
 }
 const gameVersionString = _gameVersion
 const gameVersion = versionToInt(_gameVersion)
