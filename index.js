@@ -213,7 +213,7 @@ export const getARGBColor = (a, r, g, b) => new ZRenderUtils.ARGBColor(a, r, g, 
 export const getRGBAColorFromHex = (hex) => new ZRenderUtils.RGBAColor.fromHex(hex)
 export const getARGBColorFromHex = (hex) => new ZRenderUtils.ARGBColor.fromHex(hex)
 export const getStringWidth = (text) => {
-    if (!text) return 0
+    if (text == null) return 0
     if (stringWidthCache.has(text)) return stringWidthCache.get(text)
     const stringWidth = ZRenderUtils.getStringWidth(text)
     stringWidthCache.set(text, stringWidth)
