@@ -231,10 +231,7 @@ export const calculateCenter = (x1, y1, z1, x2, y2, z2) => {
     }
 }
 export const splitText = (text, maxWidth) => {
-    if (!isLegacy) {
-        return ZRenderUtils.splitText(text, maxWidth)
-    }
-    throw new Error("splitText is not supported in legacy mode")
+    return ZRenderUtils.splitText(text, maxWidth)
 }
 export const enableScaledScissor = (drawContext, x, y, width, height) => {
     const screen = GetScreen()
