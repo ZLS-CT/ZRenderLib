@@ -267,6 +267,7 @@ export const drawWorldStringRGBA = (text, x, y, z, r = 255, g = 255, b = 255, a 
 }
 export const drawWorldString = (text, x, y, z, color = WHITE, scale = 1, renderBackground = false, centered = false, textShadow = true, disableDepth = false, maxWidth = 512) => {
     if (!text) return
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [text, x, y, z, color, scale, renderBackground, centered, textShadow, disableDepth, maxWidth]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawString(...newArgs), RenderType.WORLD)
 }
@@ -277,6 +278,7 @@ export const drawWorldTextRGBA = (text, x, y, z, r = 255, g = 255, b = 255, a = 
 }
 export const drawWorldText = (text, x, y, z, color = WHITE, scale = 1, renderBackground = false, centered = false, textShadow = true, disableDepth = false, maxWidth = 512) => {
     if (!text) return
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [text, x, y, z, color, scale, renderBackground, centered, textShadow, disableDepth, maxWidth]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawText(...newArgs), RenderType.WORLD)
 }
@@ -285,6 +287,7 @@ export const drawWorldLineRGBA = (startX, startY, startZ, endX, endY, endZ, r = 
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawLineRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawWorldLine = (startX, startY, startZ, endX, endY, endZ, color = WHITE, disableDepth = false, lineThickness = 1) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [startX, startY, startZ, endX, endY, endZ, color, disableDepth, lineThickness]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawLine(...newArgs), RenderType.WORLD)
 }
@@ -293,6 +296,7 @@ export const drawSimpleWireframeCubeRGBA = (x, y, z, size = 1, r = 255, g = 255,
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleWireframeCubeRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawSimpleWireframeCube = (x, y, z, size = 1, color = WHITE, disableDepth = false, lineThickness = 1) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, size, color, disableDepth, lineThickness]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleWireframeCube(...newArgs), RenderType.WORLD)
 }
@@ -301,6 +305,7 @@ export const drawWireframeBoxRGBA = (x, y, z, width = 1, height = 1, depth = 1, 
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawWireframeBoxRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawWireframeBox = (x, y, z, width = 1, height = 1, depth = 1, color = WHITE, disableDepth = false, lineThickness = 1) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, width, height, depth, color, disableDepth, lineThickness]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawWireframeBox(...newArgs), RenderType.WORLD)
 }
@@ -309,6 +314,7 @@ export const drawSimpleSolidCubeRGBA = (x, y, z, size = 1, r = 255, g = 255, b =
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleSolidCubeRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawSimpleSolidCube = (x, y, z, size = 1, color = WHITE, disableDepth = false) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, size, color, disableDepth]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleSolidCube(...newArgs), RenderType.WORLD)
 }
@@ -317,6 +323,7 @@ export const drawSolidBoxRGBA = (x, y, z, width = 1, height = 1, depth = 1, r = 
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSolidBoxRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawSolidBox = (x, y, z, width = 1, height = 1, depth = 1, color = WHITE, disableDepth = false) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, width, height, depth, color, disableDepth]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSolidBox(...newArgs), RenderType.WORLD)
 }
@@ -325,6 +332,7 @@ export const drawBoxRGBA = (x, y, z, width = 1, height = 1, depth = 1, r = 255, 
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawBoxRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawBox = (x, y, z, width = 1, height = 1, depth = 1, color = WHITE, disableDepth = false, wireframe = false, lineThickness = 1) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, width, height, depth, color, disableDepth, wireframe, lineThickness]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawBox(...newArgs), RenderType.WORLD)
 }
@@ -333,6 +341,7 @@ export const drawSimpleSolidSphereRGBA = (x, y, z, radius = 1, r = 255, g = 255,
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleSolidSphereRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawSimpleSolidSphere = (x, y, z, radius = 1, color = WHITE, segments = 32, disableDepth = false) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, radius, color, segments, disableDepth]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleSolidSphere(...newArgs), RenderType.WORLD)
 }
@@ -341,6 +350,7 @@ export const drawSolidSphereRGBA = (x, y, z, xScale = 1, yScale = 1, zScale = 1,
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSolidSphereRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawSolidSphere = (x, y, z, xScale = 1, yScale = 1, zScale = 1, color = WHITE, segments = 32, disableDepth = false) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, xScale, yScale, zScale, color, segments, disableDepth]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSolidSphere(...newArgs), RenderType.WORLD)
 }
@@ -349,6 +359,7 @@ export const drawSimpleWireframeSphereRGBA = (x, y, z, radius = 1, r = 255, g = 
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleWireframeSphereRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawSimpleWireframeSphere = (x, y, z, radius = 1, color = WHITE, segments = 32, disableDepth = false, lineThickness = 1) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, radius, color, segments, disableDepth, lineThickness]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleWireframeSphere(...newArgs), RenderType.WORLD)
 }
@@ -357,6 +368,7 @@ export const drawWireframeSphereRGBA = (x, y, z, xRadius = 1, yRadius = 1, zRadi
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawWireframeSphereRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawWireframeSphere = (x, y, z, xRadius = 1, yRadius = 1, zRadius = 1, color = WHITE, segments = 32, disableDepth = false, lineThickness = 1) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, xRadius, yRadius, zRadius, color, segments, disableDepth, lineThickness]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawWireframeSphere(...newArgs), RenderType.WORLD)
 }
@@ -365,6 +377,7 @@ export const drawSphereRGBA = (x, y, z, xRadius = 1, yRadius = 1, zRadius = 1, r
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSphereRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawSphere = (x, y, z, xRadius = 1, yRadius = 1, zRadius = 1, color = WHITE, segments = 32, disableDepth = false, wireframe = false, lineThickness = 1) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, xRadius, yRadius, zRadius, color, segments, disableDepth, wireframe, lineThickness]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSphere(...newArgs), RenderType.WORLD)
 }
@@ -373,6 +386,7 @@ export const drawSolidConeRGBA = (x, y, z, radius = 1, height = 1, r = 255, g = 
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSolidConeRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawSolidCone = (x, y, z, radius = 1, height = 1, color = WHITE, segments = 64, disableDepth = false) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, radius, height, color, segments, disableDepth]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSolidCone(...newArgs), RenderType.WORLD)
 }
@@ -381,6 +395,7 @@ export const drawWireframeConeRGBA = (x, y, z, radius = 1, height = 1, r = 255, 
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawWireframeConeRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawWireframeCone = (x, y, z, radius = 1, height = 1, color = WHITE, segments = 64, disableDepth = false, lineThickness = 1) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, radius, height, color, segments, disableDepth, lineThickness]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawWireframeCone(...newArgs), RenderType.WORLD)
 }
@@ -389,6 +404,7 @@ export const drawConeRGBA = (x, y, z, radius = 1, height = 1, r = 255, g = 255, 
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawConeRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawCone = (x, y, z, radius = 1, height = 1, color = WHITE, segments = 64, disableDepth = false, wireframe = false, lineThickness = 1) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, radius, height, color, segments, disableDepth, wireframe, lineThickness]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawCone(...newArgs), RenderType.WORLD)
 }
@@ -397,6 +413,7 @@ export const drawSimpleSolidCylinderRGBA = (x, y, z, radius = 1, height = 2, r =
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleSolidCylinderRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawSimpleSolidCylinder = (x, y, z, radius = 1, height = 2, color = WHITE, segments = 64, disableDepth = false) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, radius, height, color, segments, disableDepth]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleSolidCylinder(...newArgs), RenderType.WORLD)
 }
@@ -405,6 +422,7 @@ export const drawSolidCylinderRGBA = (x, y, z, topRadius = 1, bottomRadius = 1, 
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSolidCylinderRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawSolidCylinder = (x, y, z, topRadius = 1, bottomRadius = 1, height = 2, color = WHITE, segments = 64, disableDepth = false) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, topRadius, bottomRadius, height, color, segments, disableDepth]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSolidCylinder(...newArgs), RenderType.WORLD)
 }
@@ -413,6 +431,7 @@ export const drawSimpleWireframeCylinderRGBA = (x, y, z, radius = 1, height = 2,
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleWireframeCylinderRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawSimpleWireframeCylinder = (x, y, z, radius = 1, height = 2, color = WHITE, segments = 64, disableDepth = false, lineThickness = 1) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, radius, height, color, segments, disableDepth, lineThickness]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleWireframeCylinder(...newArgs), RenderType.WORLD)
 }
@@ -421,6 +440,7 @@ export const drawWireframeCylinderRGBA = (x, y, z, topRadius = 1, bottomRadius =
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawWireframeCylinderRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawWireframeCylinder = (x, y, z, topRadius = 1, bottomRadius = 1, height = 2, color = WHITE, segments = 64, disableDepth = false, lineThickness = 1) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, topRadius, bottomRadius, height, color, segments, disableDepth, lineThickness]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawWireframeCylinder(...newArgs), RenderType.WORLD)
 }
@@ -429,6 +449,7 @@ export const drawSimpleCylinderRGBA = (x, y, z, radius = 1, height = 2, r = 255,
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleCylinder(...newArgs), RenderType.WORLD)
 }
 export const drawSimpleCylinder = (x, y, z, radius = 1, height = 2, color = WHITE, segments = 64, disableDepth = false, wireframe = false, lineThickness = 1) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, radius, height, color, segments, disableDepth, wireframe, lineThickness]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleCylinder(...newArgs), RenderType.WORLD)
 }
@@ -437,6 +458,7 @@ export const drawCylinderRGBA = (x, y, z, topRadius = 1, bottomRadius = 1, heigh
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawCylinderRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawCylinder = (x, y, z, topRadius = 1, bottomRadius = 1, height = 2, color = WHITE, segments = 64, disableDepth = false, wireframe = false, lineThickness = 1) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, topRadius, bottomRadius, height, color, segments, disableDepth, wireframe, lineThickness]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawCylinder(...newArgs), RenderType.WORLD)
 }
@@ -445,6 +467,7 @@ export const drawSimpleSolidPyramidRGBA = (x, y, z, size = 1, r = 255, g = 255, 
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleSolidPyramidRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawSimpleSolidPyramid = (x, y, z, size = 1, color = WHITE, disableDepth = false) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, size, color, disableDepth]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleSolidPyramid(...newArgs), RenderType.WORLD)
 }
@@ -453,6 +476,7 @@ export const drawSolidPyramidRGBA = (x, y, z, xScale = 1, yScale = 1, zScale = 1
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSolidPyramidRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawSolidPyramid = (x, y, z, xScale = 1, yScale = 1, zScale = 1, color = WHITE, disableDepth = false) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, xScale, yScale, zScale, color, disableDepth]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSolidPyramid(...newArgs), RenderType.WORLD)
 }
@@ -461,6 +485,7 @@ export const drawSimpleWireframePyramidRGBA = (x, y, z, size = 1, r = 255, g = 2
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleWireframePyramidRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawSimpleWireframePyramid = (x, y, z, size = 1, color = WHITE, disableDepth = false, lineThickness = 1) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, size, color, disableDepth, lineThickness]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawSimpleWireframePyramid(...newArgs), RenderType.WORLD)
 }
@@ -469,6 +494,7 @@ export const drawWireframePyramidRGBA = (x, y, z, xScale = 1, yScale = 1, zScale
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawWireframePyramidRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawWireframePyramid = (x, y, z, xScale = 1, yScale = 1, zScale = 1, color = WHITE, disableDepth = false, lineThickness = 1) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, xScale, yScale, zScale, color, disableDepth, lineThickness]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawWireframePyramid(...newArgs), RenderType.WORLD)
 }
@@ -477,6 +503,7 @@ export const drawPyramidRGBA = (x, y, z, xScale = 1, yScale = 1, zScale = 1, r =
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawPyramidRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawPyramid = (x, y, z, xScale = 1, yScale = 1, zScale = 1, color = WHITE, disableDepth = false, wireframe = false, lineThickness = 1) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [x, y, z, xScale, yScale, zScale, color, disableDepth, wireframe, lineThickness]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawPyramid(...newArgs), RenderType.WORLD)
 }
@@ -485,6 +512,7 @@ export const drawTracerRGBA = (partialTicks, x, y, z, r = 255, g = 255, b = 255,
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawTracerRGBA(...newArgs), RenderType.WORLD)
 }
 export const drawTracer = (partialTicks, x, y, z, color = WHITE, disableDepth = false, lineThickness = 1) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [partialTicks, x, y, z, color, disableDepth, lineThickness]
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawTracer(...newArgs), RenderType.WORLD)
 }
@@ -550,6 +578,7 @@ export const drawGUIStringWithShadowRGBA = (drawContext, text, x, y, r = 255, g 
 }
 export const drawGUIStringWithShadow = (drawContext, text, x, y, color = WHITE, textScale = 1, renderBackground = false, maxWidth = 512, zOffset = 0) => {
     if (!text) return
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [drawContext, text, x, y, color, textScale, renderBackground, maxWidth, zOffset]
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawStringWithShadow(...newArgs), RenderType.GUI)
 }
@@ -560,6 +589,7 @@ export const drawGUIStringRGBA = (drawContext, text, x, y, r = 255, g = 255, b =
 }
 export const drawGUIString = (drawContext, text, x, y, color = WHITE, textScale = 1, renderBackground = false, textShadow = true, maxWidth = 512, zOffset = 0) => {
     if (!text) return
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [drawContext, text, x, y, color, textScale, renderBackground, textShadow, maxWidth, zOffset]
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawString(...newArgs), RenderType.GUI)
 }
@@ -570,6 +600,7 @@ export const drawGUITextWithShadowRGBA = (drawContext, text, x, y, r = 255, g = 
 }
 export const drawGUITextWithShadow = (drawContext, text, x, y, color = WHITE, textScale = 1, renderBackground = false, maxWidth = 512, zOffset = 0) => {
     if (!text) return
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [drawContext, text, x, y, color, textScale, renderBackground, maxWidth, zOffset]
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawTextWithShadow(...newArgs), RenderType.GUI)
 }
@@ -580,6 +611,7 @@ export const drawGUITextRGBA = (drawContext, text, x, y, r = 255, g = 255, b = 2
 }
 export const drawGUIText = (drawContext, text, x, y, color = WHITE, textScale = 1, renderBackground = false, textShadow = true, maxWidth = 512, zOffset = 0) => {
     if (!text) return
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [drawContext, text, x, y, color, textScale, renderBackground, textShadow, maxWidth, zOffset]
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawText(...newArgs), RenderType.GUI)
 }
@@ -588,6 +620,7 @@ export const drawGUILineRGBA = (drawContext, startX, startY, endX, endY, r = 255
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawLineRGBA(...newArgs), RenderType.GUI)
 }
 export const drawGUILine = (drawContext, startX, startY, endX, endY, color = WHITE, lineThickness = 1, zOffset = 0) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [drawContext, startX, startY, endX, endY, color, lineThickness, zOffset]
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawLine(...newArgs), RenderType.GUI)
 }
@@ -596,6 +629,7 @@ export const drawSquareRGBA = (drawContext, x, y, size, r = 255, g = 255, b = 25
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawSquareRGBA(...newArgs), RenderType.GUI)
 }
 export const drawSquare = (drawContext, x, y, size, color = WHITE, zOffset = 0) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [drawContext, x, y, size, color, zOffset]
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawSquare(...newArgs), RenderType.GUI)
 }
@@ -604,6 +638,7 @@ export const drawRectRGBA = (drawContext, x, y, width, height, r = 255, g = 255,
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawRectRGBA(...newArgs), RenderType.GUI)
 }
 export const drawRect = (drawContext, x, y, width, height, color = WHITE, zOffset = 0) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [drawContext, x, y, width, height, color, zOffset]
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawRect(...newArgs), RenderType.GUI)
 }
@@ -612,6 +647,7 @@ export const drawRoundedRectRGBA = (drawContext, x, y, width, height, radius, r 
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawRoundedRectRGBA(...newArgs), RenderType.GUI)
 }
 export const drawRoundedRect = (drawContext, x, y, width, height, radius, color = WHITE, flatCorners = [], segments = 16, zOffset = 0) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [drawContext, x, y, width, height, radius, color, flatCorners, segments, zOffset]
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawRoundedRect(...newArgs), RenderType.GUI)
 }
@@ -620,10 +656,16 @@ export const drawSimpleGradientRGBA = (drawContext, x, y, width, height, startRe
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawSimpleGradientRGBA(...newArgs), RenderType.GUI)
 }
 export const drawSimpleGradient = (drawContext, x, y, width, height, startColor = WHITE, endColor = BLACK, direction = GradientDirection.TOP_LEFT_TO_BOTTOM_RIGHT, zOffset = 0) => {
+    if (startColor instanceof Array) startColor = getRGBAColor(...startColor)
+    if (endColor instanceof Array) endColor = getRGBAColor(...endColor)
     const args = [drawContext, x, y, width, height, startColor, endColor, direction, zOffset]
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawSimpleGradient(...newArgs), RenderType.GUI)
 }
 export const drawGradient = (drawContext, x, y, width, height, topLeftColor = WHITE, topRightColor = WHITE, bottomLeftColor = BLACK, bottomRightColor = BLACK, direction = GradientDirection.TOP_LEFT_TO_BOTTOM_RIGHT, zOffset = 0) => {
+    if (topLeftColor instanceof Array) topLeftColor = getRGBAColor(...topLeftColor)
+    if (topRightColor instanceof Array) topRightColor = getRGBAColor(...topRightColor)
+    if (bottomLeftColor instanceof Array) bottomLeftColor = getRGBAColor(...bottomLeftColor)
+    if (bottomRightColor instanceof Array) bottomRightColor = getRGBAColor(...bottomRightColor)
     const args = [drawContext, x, y, width, height, topLeftColor, topRightColor, bottomLeftColor, bottomRightColor, direction, zOffset]
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawGradient(...newArgs), RenderType.GUI)
 }
@@ -632,6 +674,7 @@ export const drawSimpleCircleRGBA = (drawContext, x, y, radius = 1, r = 255, g =
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawSimpleCircleRGBA(...newArgs), RenderType.GUI)
 }
 export const drawSimpleCircle = (drawContext, x, y, radius = 1, color = WHITE, edges = 32, zOffset = 0) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [drawContext, x, y, radius, color, edges, zOffset]
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawSimpleCircle(...newArgs), RenderType.GUI)
 }
@@ -640,6 +683,7 @@ export const drawCircleRGBA = (drawContext, x, y, xScale = 1, yScale = 1, r = 25
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawCircleRGBA(...newArgs), RenderType.GUI)
 }
 export const drawCircle = (drawContext, x, y, xScale = 1, yScale = 1, color = WHITE, edges = 32, rotationDegrees = 0, xRotationOffset = 0, yRotationOffset = 0, zOffset = 0) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [drawContext, x, y, xScale, yScale, color, edges, rotationDegrees, xRotationOffset, yRotationOffset, zOffset]
     CallAndApplyValues(args, (newArgs) => ZGUIRenderer.drawCircle(...newArgs), RenderType.GUI)
 }
@@ -656,6 +700,7 @@ export const drawImageRGBA = (drawContext, image, x, y, width = null, height = n
     tryDraw()
 }
 export const drawImage = (drawContext, image, x, y, width = null, height = null, color = WHITE, zOffset = 0) => {
+    if (color instanceof Array) color = getRGBAColor(...color).getLong()
     const args = [drawContext, image, x, y, width, height, color, zOffset]
     let attempts = 0
     const tryDraw = () => {
