@@ -499,35 +499,47 @@ export const GetEntityInterpolatedPosition = (partialTicks, entity) => {
         z: lastZ + (entity.getZ() - lastZ) * renderTicks,
     }
 }
-export const drawEntityNametagRGBA = (partialTicks, entity, scale = 1, r = 255, g = 255, b = 255, a = 255) => {
+export const drawEntityNametag = (partialTicks, entity, scale = 1, color = WHITE) => {
     const { x, y, z } = GetEntityInterpolatedPosition(partialTicks, entity)
-    drawWorldStringRGBA(
+    drawWorldString(
         entity.getName(),
         x, y + entity.getHeight() + 0.5, z,
-        r, g, b, a,
+        color,
         scale, false, true, true, true, 512
     )
 }
-export const drawEntityTracerRGBA = (partialTicks, entity, lineThickness = 1, r = 255, g = 255, b = 255, a = 255) => {
+export const drawEntityNametagRGBA = (partialTicks, entity, scale = 1, r = 255, g = 255, b = 255, a = 255) => {
+    const color = getRGBAColor(r, g, b, a)
+    drawEntityNametag(partialTicks, entity, scale, color)
+}
+export const drawEntityTracer = (partialTicks, entity, lineThickness = 1, color = WHITE) => {
     const { x, y, z } = GetEntityInterpolatedPosition(partialTicks, entity)
-    drawTracerRGBA(
+    drawTracer(
         partialTicks,
         x, y + entity.getHeight() / 2, z,
-        r, g, b, a,
+        color,
         true, lineThickness,
     )
 }
-export const drawEntityBoxRGBA = (partialTicks, entity, scale = 1, r = 255, g = 255, b = 255, a = 255) => {
+export const drawEntityTracerRGBA = (partialTicks, entity, lineThickness = 1, r = 255, g = 255, b = 255, a = 255) => {
+    const color = getRGBAColor(r, g, b, a)
+    drawEntityTracer(partialTicks, entity, lineThickness, color)
+}
+export const drawEntityBox = (partialTicks, entity, scale = 1, color = WHITE) => {
     const { x, y, z } = GetEntityInterpolatedPosition(partialTicks, entity)
     if (isLegacy) y -= 0.4
     const width = entity.getWidth() * 1.25
     const height = entity.getHeight()
-    drawBoxRGBA(
+    drawBox(
         x, y + height / 2, z,
         width, height, width,
-        r, g, b, a,
+        color,
         true, true, scale
     )
+}
+export const drawEntityBoxRGBA = (partialTicks, entity, scale = 1, r = 255, g = 255, b = 255, a = 255) => {
+    const color = getRGBAColor(r, g, b, a)
+    drawEntityBox(partialTicks, entity, scale, color)
 }
 
 // GUIRenderer
