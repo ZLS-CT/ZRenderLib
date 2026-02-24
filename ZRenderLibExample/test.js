@@ -1,4 +1,4 @@
-import * as ZRenderLib from "./index"
+import * as ZRenderLib from "../ZRenderLib/index"
 import { isLegacy, modulesFolder } from "ZCore"
 
 const renderWorldTriggerName = (isLegacy) ? "renderWorld" : "postRenderWorld"
@@ -138,12 +138,12 @@ register(renderWorldTriggerName, (partialTicks) => {
     ZRenderLib.drawTracer(partialTicks, tracerX, tracerY, tracerZ - 4, tracerColor, true, 1)
 
     // 10809, 12105, 12108, 12110
-    const entityColorRGBA = [0, 0, 255, 255]
-    World.getAllEntities().forEach(entity => {
-        ZRenderLib.drawEntityNametagRGBA(partialTicks, entity, 1, ...entityColorRGBA)
-        ZRenderLib.drawEntityTracerRGBA(partialTicks, entity, 1, ...entityColorRGBA)
-        ZRenderLib.drawEntityBoxRGBA(partialTicks, entity, 1, ...entityColorRGBA)
-    })
+    // const entityColorRGBA = [0, 0, 255, 255]
+    // World.getAllEntities().forEach(entity => {
+    //     ZRenderLib.drawEntityNametagRGBA(partialTicks, entity, 1, ...entityColorRGBA)
+    //     ZRenderLib.drawEntityTracerRGBA(partialTicks, entity, 1, ...entityColorRGBA)
+    //     ZRenderLib.drawEntityBoxRGBA(partialTicks, entity, 1, ...entityColorRGBA)
+    // })
 })
 
 function getCombinations(array) {
@@ -165,9 +165,9 @@ function combine(array, length, start, current, results) {
     }
 }
 
-const ctImage = ZRenderLib.loadImageFromFile(`${modulesFolder}/ZRenderLib/assets/ct.png`)
-const logoImage = ZRenderLib.loadImageFromFile(`${modulesFolder}/ZRenderLib/assets/logo.png`)
-const logoImage2 = ZRenderLib.loadCTImage(Image.fromFile(`${modulesFolder}/ZRenderLib/assets/logo.png`))
+const ctImage = ZRenderLib.loadImageFromFile(`${modulesFolder}/ZRenderLibExample/assets/ct.png`)
+const logoImage = ZRenderLib.loadImageFromFile(`${modulesFolder}/ZRenderLibExample/assets/logo.png`)
+const logoImage2 = ZRenderLib.loadCTImage(Image.fromFile(`${modulesFolder}/ZRenderLibExample/assets/logo.png`))
 const renderHudTriggerName = (isLegacy) ? "RenderOverlay" : "RenderHudOverlay"
 register(renderHudTriggerName, (drawContext, event) => {
     [drawContext, event, partialTicks] = ZRenderLib.FixGUIRenderValues(drawContext, event)

@@ -1,0 +1,7 @@
+{
+    "name": "ZRenderLibExample",
+    "description": "Example module for ZRenderLib.",
+    "author": "Zephy (Nvidia2080Ti)",
+    "version": "1.0.0",
+    "entry": "test.js"
+}
