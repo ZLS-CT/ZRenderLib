@@ -222,7 +222,7 @@ export const splitText = (text, maxWidth) => {
 export const enableScaledScissor = (drawContext, x, y, width, height) => {
     const screen = GetScreen()
     const screenHeight = screen.getHeight()
-    const screenScale = screen.getScale()
+    const screenScale = 2
     enableScissor(drawContext, x * screenScale, (screenHeight - (y + height)) * screenScale, width * screenScale, height * screenScale)
 }
 export const enableScissor = (drawContext, x, y, width, height) => {
