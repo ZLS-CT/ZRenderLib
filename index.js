@@ -1,3 +1,5 @@
+import * as ZCoreCore from "../ZCore/core"
+
 class ExportableValue {
     constructor(initial) {
         this._value = initial;
@@ -20,28 +22,12 @@ class ExportableValue {
     }
 }
 
-const versionToInt = (version) => {
-    const [major, minor, patch] = version.split(".").map(Number)
-    return Number(
-        `${major}${String(minor).padStart(2, "0")}${String(patch).padStart(2, "0")}`
-    )
-}
-
-const ForgeVersion = Java.type("net.minecraftforge.common.ForgeVersion")
-let _gameVersion = Client.getVersion()
-if (Object.keys(ForgeVersion).length > 0) {
-    _gameVersion = ForgeVersion.mcVersion
-}
-const gameVersionString = _gameVersion
-const gameVersion = versionToInt(_gameVersion)
-const isLegacy = gameVersion < 12100
-
 // Thanks to DocilElm for this method of loading multi-version jars, used in Barrl
-const JSContextFactory = isLegacy ?
+const JSContextFactory = ZCoreCore.isLegacy ?
     Java.type("com.chattriggers.ctjs.engine.langs.js.JSContextFactory").INSTANCE :
     Java.type("com.chattriggers.ctjs.internal.engine.JSContextFactory").INSTANCE
 JSContextFactory.addAllURLs([
-    new (java.io.File)(`./config/ChatTriggers/modules/ZRenderLib/Jars/ZRenderLib-${gameVersionString}.unloaded`).toURI().toURL()
+    new (java.io.File)(`./config/ChatTriggers/modules/ZRenderLib/Jars/ZRenderLib-${ZCoreCore.gameVersionString}.unloaded`).toURI().toURL()
 ])
 
 const JavaClass = Java.type('java.lang.Class')
@@ -61,7 +47,7 @@ const stringWidthCache = new Map()
 export let isFork = new ExportableValue(false)
 
 let ctRenderer = null
-if (isLegacy) {
+if (ZCoreCore.isLegacy) {
     ctRenderer = tryGetJavaType("com.chattriggers.ctjs.minecraft.libs.renderer.Renderer")
 } else {
     isFork = false
@@ -93,7 +79,7 @@ export const GetScreen = () => {
 
 let matrixStackReflectionField = null
 let matrixStackReflectionInstance = null
-if (!isLegacy) {
+if (!ZCoreCore.isLegacy) {
     const Class = Java.type("java.lang.Class")
     try {
         let clazz = null
@@ -117,7 +103,7 @@ if (!isLegacy) {
 }
 
 const applyCTMatrixStack = () => {
-    if (isLegacy) return
+    if (ZCoreCore.isLegacy) return
     try {
         const matrixStack = matrixStackReflectionField?.get(matrixStackReflectionInstance)
         if (matrixStack != null) {
@@ -128,7 +114,7 @@ const applyCTMatrixStack = () => {
     }
 }
 const CallAndApplyValues = (args, func, type) => {
-    if (isLegacy && type == RenderType.GUI) {
+    if (ZCoreCore.isLegacy && type == RenderType.GUI) {
         args = args.slice(1)
     }
 
@@ -136,7 +122,7 @@ const CallAndApplyValues = (args, func, type) => {
     func(args)
 }
 export const FixGUIRenderValues = (drawContext, event) => {
-    if (isLegacy) {
+    if (ZCoreCore.isLegacy) {
         return [
             null, // drawContext,
             drawContext, // event
@@ -241,19 +227,19 @@ export const enableScaledScissor = (drawContext, x, y, width, height) => {
 }
 export const enableScissor = (drawContext, x, y, width, height) => {
     let args = []
-    if (gameVersion >= 12106) {
+    if (ZCoreCore.gameVersion >= 12106) {
         args = [drawContext, x / 2, y / 2, width / 2, height / 2]
     } else {
         args = [drawContext, x, y, width, height]
     }
-    if (gameVersion <= 12105) {
+    if (ZCoreCore.gameVersion <= 12105) {
         args = args.slice(1)
     }
     ZRenderUtils.enableScissor(...args)
 }
 export const disableScissor = (drawContext) => {
     let args = [drawContext]
-    if (gameVersion <= 12105) {
+    if (ZCoreCore.gameVersion <= 12105) {
         args = []
     }
     ZRenderUtils.disableScissor(...args)
@@ -517,7 +503,7 @@ export const drawTracer = (partialTicks, x, y, z, color = WHITE, disableDepth = 
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawTracer(...newArgs), RenderType.WORLD)
 }
 export const GetEntityInterpolatedPosition = (partialTicks, entity) => {
-    const renderTicks = (isLegacy) ? partialTicks : Client.getMinecraft().renderTickCounter.getTickProgress(true)
+    const renderTicks = (ZCoreCore.isLegacy) ? partialTicks : Client.getMinecraft().renderTickCounter.getTickProgress(true)
     const lastX = entity.getLastX()
     const lastY = entity.getLastY()
     const lastZ = entity.getLastZ()
@@ -555,7 +541,7 @@ export const drawEntityTracerRGBA = (partialTicks, entity, lineThickness = 1, r 
 }
 export const drawEntityBox = (partialTicks, entity, scale = 1, color = WHITE) => {
     const { x, y, z } = GetEntityInterpolatedPosition(partialTicks, entity)
-    if (isLegacy) y -= 0.4
+    if (ZCoreCore.isLegacy) y -= 0.4
     const width = entity.getWidth() * 1.25
     const height = entity.getHeight()
     drawBox(
@@ -713,7 +699,7 @@ export const drawImage = (drawContext, image, x, y, width = null, height = null,
     tryDraw()
 }
 const loadImage = (zImage) => {
-    if (!isLegacy) {
+    if (!ZCoreCore.isLegacy) {
         Client.scheduleTask(0, () => {
             zImage.setTexture(ZImage.bufferedImageToNativeTexture(zImage.image))
         })
