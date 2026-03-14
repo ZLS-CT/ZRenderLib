@@ -523,7 +523,7 @@ export const drawEntityNametag = (partialTicks, entity, scale = 1, color = WHITE
     )
 }
 export const drawEntityNametagRGBA = (partialTicks, entity, scale = 1, r = 255, g = 255, b = 255, a = 255) => {
-    const color = getRGBAColor(r, g, b, a)
+    const color = getRGBAColor(r, g, b, a).getLong()
     drawEntityNametag(partialTicks, entity, scale, color)
 }
 export const drawEntityTracer = (partialTicks, entity, lineThickness = 1, color = WHITE) => {
@@ -536,7 +536,7 @@ export const drawEntityTracer = (partialTicks, entity, lineThickness = 1, color 
     )
 }
 export const drawEntityTracerRGBA = (partialTicks, entity, lineThickness = 1, r = 255, g = 255, b = 255, a = 255) => {
-    const color = getRGBAColor(r, g, b, a)
+    const color = getRGBAColor(r, g, b, a).getLong()
     drawEntityTracer(partialTicks, entity, lineThickness, color)
 }
 export const drawEntityBox = (partialTicks, entity, scale = 1, color = WHITE) => {
@@ -552,7 +552,7 @@ export const drawEntityBox = (partialTicks, entity, scale = 1, color = WHITE) =>
     )
 }
 export const drawEntityBoxRGBA = (partialTicks, entity, scale = 1, r = 255, g = 255, b = 255, a = 255) => {
-    const color = getRGBAColor(r, g, b, a)
+    const color = getRGBAColor(r, g, b, a).getLong()
     drawEntityBox(partialTicks, entity, scale, color)
 }
 
