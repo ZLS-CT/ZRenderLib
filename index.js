@@ -104,13 +104,20 @@ if (!ZCoreCore.isLegacy) {
 
 const applyCTMatrixStack = () => {
     if (ZCoreCore.isLegacy) return
+    let matrixStack = null
     try {
-        const matrixStack = matrixStackReflectionField?.get(matrixStackReflectionInstance)
+        matrixStack = matrixStackReflectionField?.get(matrixStackReflectionInstance)
         if (matrixStack != null) {
             ZRenderUtils.setMatrixStack(matrixStack)
         }
     } catch (e) {
-        ChatLib.chat("Couldn't set matrixStack values from CT.")
+        try {
+            if (matrixStack != null) {
+                ZRenderUtils.setMatrixStack(matrixStack.toMC())
+            }
+        } catch (e) {
+            ChatLib.chat(`Couldn't set matrixStack values from CT. | ${e} | ${e.stack}`)
+        }
     }
 }
 const CallAndApplyValues = (args, func, type) => {
