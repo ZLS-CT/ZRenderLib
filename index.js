@@ -523,47 +523,68 @@ export const GetEntityInterpolatedPosition = (partialTicks, entity) => {
         z: lastZ + (entity.getZ() - lastZ) * renderTicks,
     }
 }
-export const drawEntityNametag = (partialTicks, entity, scale = 1, color = WHITE) => {
+export const drawEntityNametagRGBA = (partialTicks, entity, r = 255, g = 255, b = 255, a = 255, scale = 1, renderBackground = false, centered = false, textShadow = true, disableDepth = false, maxWidth = 512) => {
+    const color = getRGBAColor(r, g, b, a).getLong()
+    drawEntityNametag(partialTicks, entity, color, scale, renderBackground, centered, textShadow, disableDepth, maxWidth)
+}
+export const drawEntityNametag = (partialTicks, entity, color = WHITE, scale = 1, renderBackground = false, centered = false, textShadow = true, disableDepth = false, maxWidth = 512) => {
     const { x, y, z } = GetEntityInterpolatedPosition(partialTicks, entity)
     drawWorldString(
         entity.getName(),
-        x, y + entity.getHeight() + 0.5, z,
+        x,
+        y + entity.getHeight() + 0.5,
+        z,
         color,
-        scale, false, true, true, true, 512
+        scale,
+        renderBackground,
+        centered,
+        textShadow,
+        disableDepth,
+        maxWidth,
     )
 }
-export const drawEntityNametagRGBA = (partialTicks, entity, scale = 1, r = 255, g = 255, b = 255, a = 255) => {
+export const drawEntityTracerRGBA = (partialTicks, entity, r = 255, g = 255, b = 255, a = 255, disableDepth = false, lineThickness = 1) => {
     const color = getRGBAColor(r, g, b, a).getLong()
-    drawEntityNametag(partialTicks, entity, scale, color)
+    drawEntityTracer(partialTicks, entity, color, disableDepth, lineThickness)
 }
-export const drawEntityTracer = (partialTicks, entity, lineThickness = 1, color = WHITE) => {
+export const drawEntityTracer = (partialTicks, entity, color = WHITE, disableDepth = false, lineThickness = 1) => {
     const { x, y, z } = GetEntityInterpolatedPosition(partialTicks, entity)
+    const height = entity.getHeight()
+    if (!disableDepth && !isVisible(x, y + height, z)) return
     drawTracer(
         partialTicks,
-        x, y + entity.getHeight() / 2, z,
+        x,
+        y + height / 2,
+        z,
         color,
-        true, lineThickness,
+        disableDepth,
+        lineThickness,
     )
 }
-export const drawEntityTracerRGBA = (partialTicks, entity, lineThickness = 1, r = 255, g = 255, b = 255, a = 255) => {
+export const drawEntityBoxRGBA = (partialTicks, entity, r = 255, g = 255, b = 255, a = 255, disableDepth = false, wireframe = false, lineThickness = 1) => {
     const color = getRGBAColor(r, g, b, a).getLong()
-    drawEntityTracer(partialTicks, entity, lineThickness, color)
+    drawEntityBox(partialTicks, entity, color, disableDepth, wireframe, lineThickness)
 }
-export const drawEntityBox = (partialTicks, entity, scale = 1, color = WHITE) => {
+export const drawEntityBox = (partialTicks, entity, color = WHITE, disableDepth = false, wireframe = false, lineThickness = 1) => {
     const { x, y, z } = GetEntityInterpolatedPosition(partialTicks, entity)
-    if (ZCoreCore.isLegacy) y -= 0.4
+    let newY = y
+    if (ZCoreCore.isLegacy) {
+        newY -= 0.4
+    }
     const width = entity.getWidth() * 1.25
     const height = entity.getHeight()
     drawBox(
-        x, y + height / 2, z,
-        width, height, width,
+        x,
+        newY + height / 2,
+        z,
+        width,
+        height,
+        width,
         color,
-        true, true, scale
+        disableDepth,
+        wireframe,
+        lineThickness,
     )
-}
-export const drawEntityBoxRGBA = (partialTicks, entity, scale = 1, r = 255, g = 255, b = 255, a = 255) => {
-    const color = getRGBAColor(r, g, b, a).getLong()
-    drawEntityBox(partialTicks, entity, scale, color)
 }
 
 // GUIRenderer

@@ -138,12 +138,12 @@ register(renderWorldTriggerName, (partialTicks) => {
     ZRenderLib.drawTracer(partialTicks, tracerX, tracerY, tracerZ - 4, tracerColor, true, 1)
 
     // 10809, 12105, 12108, 12110
-    // const entityColorRGBA = [0, 0, 255, 255]
-    // World.getAllEntities().forEach(entity => {
-    //     ZRenderLib.drawEntityNametagRGBA(partialTicks, entity, 1, ...entityColorRGBA)
-    //     ZRenderLib.drawEntityTracerRGBA(partialTicks, entity, 1, ...entityColorRGBA)
-    //     ZRenderLib.drawEntityBoxRGBA(partialTicks, entity, 1, ...entityColorRGBA)
-    // })
+    const entityColorRGBA = [0, 0, 255, 255]
+    World.getAllEntities().forEach(entity => {
+        ZRenderLib.drawEntityNametagRGBA(partialTicks, entity, ...entityColorRGBA, 1, false, false, true, true)
+        ZRenderLib.drawEntityTracerRGBA(partialTicks, entity, ...entityColorRGBA, true)
+        ZRenderLib.drawEntityBoxRGBA(partialTicks, entity, ...entityColorRGBA, true, true, 1)
+    })
 })
 
 function getCombinations(array) {
