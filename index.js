@@ -223,6 +223,9 @@ export const calculateCenter = (x1, y1, z1, x2, y2, z2) => {
         sizeZ: centerObject.wz,
     }
 }
+export const isVisible = (x, y, z) => {
+    return ZRenderUtils.isVisible(x, y, z)
+}
 export const splitText = (text, maxWidth) => {
     return ZRenderUtils.splitText(text, maxWidth)
 }
