@@ -224,6 +224,7 @@ export const calculateCenter = (x1, y1, z1, x2, y2, z2) => {
     }
 }
 export const isVisible = (x, y, z) => {
+    if (ZCoreCore.isLegacy) throw new Error("isVisible is not supported in legacy.")
     return ZRenderUtils.isVisible(x, y, z)
 }
 export const splitText = (text, maxWidth) => {
