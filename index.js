@@ -237,12 +237,7 @@ export const enableScaledScissor = (drawContext, x, y, width, height) => {
     enableScissor(drawContext, x * screenScale, (screenHeight - (y + height)) * screenScale, width * screenScale, height * screenScale)
 }
 export const enableScissor = (drawContext, x, y, width, height) => {
-    let args = []
-    if (ZCoreCore.gameVersion >= 12106) {
-        args = [drawContext, x / 2, y / 2, width / 2, height / 2]
-    } else {
-        args = [drawContext, x, y, width, height]
-    }
+    let args = [drawContext, x, y, width, height]
     if (ZCoreCore.gameVersion <= 12105) {
         args = args.slice(1)
     }
