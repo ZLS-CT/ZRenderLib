@@ -1,62 +1,19 @@
 import * as ZCoreCore from "../ZCore/core"
 
-class ExportableValue {
-    constructor(initial) {
-        this._value = initial;
-    }
-
-    get value() {
-        return this._value;
-    }
-
-    set value(v) {
-        this._value = v;
-    }
-
-    toString() {
-        return String(this._value);
-    }
-
-    valueOf() {
-        return this._value;
-    }
-}
-
-// Thanks to DocilElm for this method of loading multi-version jars, used in Barrl
-const JSContextFactory = ZCoreCore.isLegacy ?
-    Java.type("com.chattriggers.ctjs.engine.langs.js.JSContextFactory").INSTANCE :
-    Java.type("com.chattriggers.ctjs.internal.engine.JSContextFactory").INSTANCE
-JSContextFactory.addAllURLs([
-    new (java.io.File)(`./config/ChatTriggers/modules/ZRenderLib/Jars/ZRenderLib-${ZCoreCore.gameVersionString}.unloaded`).toURI().toURL()
-])
-
-const JavaClass = Java.type('java.lang.Class')
+const JavaClass = Java.type("java.lang.Class")
 const tryGetJavaType = (path) => {
     const javaType = Java.type(path)
-    if (!(javaType?.['class'] instanceof JavaClass)) throw new Error(`Java type ${path} not found.`)
+    if (!(javaType?.["class"] instanceof JavaClass)) throw new Error(`Java type ${path} not found.`)
     return javaType
 }
 
-const ZRenderUtils = tryGetJavaType("org.zephy.zrenderlib.RenderUtils")
-const ZWorldRenderer = tryGetJavaType("org.zephy.zrenderlib.WorldRenderer").INSTANCE
-const ZGUIRenderer = tryGetJavaType("org.zephy.zrenderlib.GUIRenderer").INSTANCE
-const ZImage = tryGetJavaType("org.zephy.zrenderlib.Image")
+const ZRenderUtils = tryGetJavaType("com.zephy.zjs.api.render.RenderUtils")
+const ZWorldRenderer = tryGetJavaType("com.zephy.zjs.api.render.WorldRenderer").INSTANCE
+const ZGUIRenderer = tryGetJavaType("com.zephy.zjs.api.render.GUIRenderer").INSTANCE
+const ZImage = tryGetJavaType("com.zephy.zjs.api.render.Image")
 
 const maxImageDrawAttempts = 100
 const stringWidthCache = new Map()
-export let isFork = new ExportableValue(false)
-
-let ctRenderer = null
-if (ZCoreCore.isLegacy) {
-    ctRenderer = tryGetJavaType("com.chattriggers.ctjs.minecraft.libs.renderer.Renderer")
-} else {
-    isFork = false
-    ctRenderer = Java.type("com.chattriggers.ctjs.api.render.Renderer")
-    if (Object.keys(ctRenderer).length <= 0) {
-        isFork = true
-        ctRenderer = tryGetJavaType("com.chattriggers.ctjs.api.render.RenderUtils")
-    }
-}
 
 export const GetRenderUtils = () => {
     return ZRenderUtils
@@ -70,9 +27,6 @@ export const GetGUIRenderer = () => {
 export const GetImage = () => {
     return ZImage
 }
-export const GetCTRenderer = () => {
-    return ctRenderer
-}
 export const GetScreen = () => {
     return ZRenderUtils.screen
 }
@@ -80,11 +34,13 @@ export const GetScreen = () => {
 let matrixStackReflectionField = null
 let matrixStackReflectionInstance = null
 if (!ZCoreCore.isLegacy) {
-    const Class = Java.type("java.lang.Class")
     try {
         let clazz = null
         let instance = null
-        if (isFork) {
+        if (ZCoreCore.isZJS) {
+            clazz = Class.forName("com.zephy.zjs.api.render.RenderUtils")
+            instance = clazz.getField("INSTANCE").get(null)
+        } else if (ZCoreCore.isFork) {
             clazz = Class.forName("com.chattriggers.ctjs.api.render.RenderUtils")
             instance = clazz.getField("INSTANCE").get(null)
         } else {
@@ -98,11 +54,11 @@ if (!ZCoreCore.isLegacy) {
         matrixStackReflectionField = field
         matrixStackReflectionInstance = instance
     } catch (e) {
-        ChatLib.chat("Couldn't load matrixStack reflection values from CT.")
+        ChatLib.chat("Couldn't load matrixStack reflection values.")
     }
 }
 
-const applyCTMatrixStack = () => {
+const applyMatrixStack = () => {
     if (ZCoreCore.isLegacy) return
     let matrixStack = null
     try {
@@ -116,7 +72,7 @@ const applyCTMatrixStack = () => {
                 ZRenderUtils.setMatrixStack(matrixStack.toMC())
             }
         } catch (e) {
-            ChatLib.chat(`Couldn't set matrixStack values from CT. | ${e} | ${e.stack}`)
+            ChatLib.chat(`Couldn't set matrixStack values. | ${e} | ${e.stack}`)
         }
     }
 }
@@ -125,7 +81,7 @@ const CallAndApplyValues = (args, func, type) => {
         args = args.slice(1)
     }
 
-    applyCTMatrixStack()
+    applyMatrixStack()
     func(args)
 }
 export const FixGUIRenderValues = (drawContext, event) => {
@@ -137,7 +93,7 @@ export const FixGUIRenderValues = (drawContext, event) => {
         ]
     }
 
-    if (isFork) {
+    if (ZCoreCore.isZJS || ZCoreCore.isFork) {
         return [
             drawContext, // drawContext,
             null, // event,
@@ -509,7 +465,7 @@ export const drawTracer = (partialTicks, x, y, z, color = WHITE, disableDepth = 
     CallAndApplyValues(args, (newArgs) => ZWorldRenderer.drawTracer(...newArgs), RenderType.WORLD)
 }
 export const GetEntityInterpolatedPosition = (partialTicks, entity) => {
-    const renderTicks = (ZCoreCore.isLegacy) ? partialTicks : Client.getMinecraft().renderTickCounter.getTickProgress(true)
+    const renderTicks = (ZCoreCore.isLegacy) ? partialTicks : Client.getMinecraft().deltaTracker.getGameTimeDeltaPartialTick(true)
     const lastX = entity.getLastX()
     const lastY = entity.getLastY()
     const lastZ = entity.getLastZ()
@@ -725,17 +681,20 @@ export const drawImage = (drawContext, image, x, y, width = null, height = null,
     }
     tryDraw()
 }
-const loadImage = (zImage) => {
+const loadImage = (image) => {
     if (!ZCoreCore.isLegacy) {
         Client.scheduleTask(0, () => {
-            zImage.setTexture(ZImage.bufferedImageToNativeTexture(zImage.image))
+            image.setTexture(ZImage.bufferedImageToNativeTexture(image.image))
         })
     }
-    return zImage
+    return image
 }
 export const loadImageFromFile = (filePath) => {
     return loadImage(ZImage.fromFile(filePath))
 }
-export const loadCTImage = (ctImage) => {
-    return loadImage(new ZImage(ctImage.image))
+export const loadCTImage = (image) => {
+    return loadImage(new ZImage(image.image))
+}
+export const loadZImage = (image) => {
+    return loadImage(new ZImage(image.image))
 }

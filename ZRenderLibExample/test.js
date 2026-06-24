@@ -1,11 +1,14 @@
 import * as ZRenderLib from "../ZRenderLib/index"
-import { isLegacy, modulesFolder } from "ZCore"
+import * as ZCore from "../ZCore"
+
+const isLegacy = false
+const modulesFolder = ZCore.modulesFolder
 
 const renderWorldTriggerName = (isLegacy) ? "renderWorld" : "postRenderWorld"
 register(renderWorldTriggerName, (partialTicks) => {
-    // const x = Player.getX()
-    // const y = Player.getY()
-    // const z = Player.getZ()
+    // const x = ZPlayer.getX()
+    // const y = ZPlayer.getY()
+    // const z = ZPlayer.getZ()
     const x = 0.5
     const y = 1
     const z = 0.5
@@ -198,7 +201,7 @@ register(renderHudTriggerName, (drawContext, event) => {
     ZRenderLib.drawGUIText(drawContext, text, stringX, stringY + (18 * stringHeight), ZRenderLib.BLUE, 1, true, true, 512, 0)
     const ZRenderUtils = ZRenderLib.GetRenderUtils()
     const fontRenderer = ZRenderUtils.getTextRenderer()
-    drawContext.drawText(fontRenderer, text, stringX, stringY + (19 * stringHeight), -1, true)
+    drawContext.text(fontRenderer, text, stringX, stringY + (19 * stringHeight), -1, true)
 
     // 10809, 12105, 12108, 12110
     const lineColor = 0x00FFFFFF
