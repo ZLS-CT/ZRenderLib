@@ -123,6 +123,28 @@ export const FlattenRoundedRectCorner = {
     BOTTOM_LEFT: ZRenderUtils.FlattenRoundedRectCorner.BOTTOM_LEFT,
     BOTTOM_RIGHT: ZRenderUtils.FlattenRoundedRectCorner.BOTTOM_RIGHT,
 }
+export const TOP_FLAT_CORNERS = [
+    FlattenRoundedRectCorner.TOP_LEFT,
+    FlattenRoundedRectCorner.TOP_RIGHT,
+]
+export const BOTTOM_FLAT_CORNERS = [
+    FlattenRoundedRectCorner.BOTTOM_LEFT,
+    FlattenRoundedRectCorner.BOTTOM_RIGHT,
+]
+export const LEFT_FLAT_CORNERS = [
+    FlattenRoundedRectCorner.TOP_LEFT,
+    FlattenRoundedRectCorner.BOTTOM_LEFT,
+]
+export const RIGHT_FLAT_CORNERS = [
+    FlattenRoundedRectCorner.TOP_RIGHT,
+    FlattenRoundedRectCorner.BOTTOM_RIGHT,
+]
+export const ALL_FLAT_CORNERS = [
+    FlattenRoundedRectCorner.TOP_LEFT,
+    FlattenRoundedRectCorner.TOP_RIGHT,
+    FlattenRoundedRectCorner.BOTTOM_LEFT,
+    FlattenRoundedRectCorner.BOTTOM_RIGHT,
+]
 export const RenderType = {
     WORLD: 0,
     GUI: 1,
