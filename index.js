@@ -7,10 +7,10 @@ const tryGetJavaType = (path) => {
     return javaType
 }
 
-const ZRenderUtils = tryGetJavaType("com.zephy.zjs.api.render.RenderUtils")
-const ZWorldRenderer = tryGetJavaType("com.zephy.zjs.api.render.WorldRenderer").INSTANCE
-const ZGUIRenderer = tryGetJavaType("com.zephy.zjs.api.render.GUIRenderer").INSTANCE
-const ZImage = tryGetJavaType("com.zephy.zjs.api.render.Image")
+const ZRenderUtils = tryGetJavaType("org.zephy.zrenderlib.RenderUtils")
+const ZWorldRenderer = tryGetJavaType("org.zephy.zrenderlib.WorldRenderer").INSTANCE
+const ZGUIRenderer = tryGetJavaType("org.zephy.zrenderlib.GUIRenderer").INSTANCE
+const ZImage = tryGetJavaType("org.zephy.zrenderlib.Image")
 
 const maxImageDrawAttempts = 100
 const stringWidthCache = new Map()
@@ -38,7 +38,7 @@ if (!ZCoreCore.isLegacy) {
         let clazz = null
         let instance = null
         if (ZCoreCore.isZJS) {
-            clazz = Class.forName("com.zephy.zjs.api.render.RenderUtils")
+            clazz = Class.forName("org.zephy.zrenderlib.RenderUtils")
             instance = clazz.getField("INSTANCE").get(null)
         } else if (ZCoreCore.isFork) {
             clazz = Class.forName("com.chattriggers.ctjs.api.render.RenderUtils")
