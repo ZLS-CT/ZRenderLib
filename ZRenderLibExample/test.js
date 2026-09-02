@@ -1,10 +1,7 @@
 import * as ZRenderLib from "../ZRenderLib/index"
 import * as ZCore from "../ZCore"
 
-const isLegacy = false
-const modulesFolder = ZCore.modulesFolder
-
-const renderWorldTriggerName = (isLegacy) ? "renderWorld" : "postRenderWorld"
+const renderWorldTriggerName = (ZCore.isLegacy) ? "renderWorld" : "postRenderWorld"
 register(renderWorldTriggerName, (partialTicks) => {
     // const x = ZPlayer.getX()
     // const y = ZPlayer.getY()
@@ -168,10 +165,10 @@ function combine(array, length, start, current, results) {
     }
 }
 
-const ctImage = ZRenderLib.loadImageFromFile(`${modulesFolder}/ZRenderLibExample/assets/ct.png`)
-const logoImage = ZRenderLib.loadImageFromFile(`${modulesFolder}/ZRenderLibExample/assets/logo.png`)
-const logoImage2 = ZRenderLib.loadCTImage(Image.fromFile(`${modulesFolder}/ZRenderLibExample/assets/logo.png`))
-const renderHudTriggerName = (isLegacy) ? "RenderOverlay" : "RenderHudOverlay"
+const ctImage = ZRenderLib.loadImageFromFile(`${ZCore.modulesFolderPath}/ZRenderLibExample/assets/ct.png`)
+const logoImage = ZRenderLib.loadImageFromFile(`${ZCore.modulesFolderPath}/ZRenderLibExample/assets/logo.png`)
+const logoImage2 = ZRenderLib.loadCTImage(Image.fromFile(`${ZCore.modulesFolderPath}/ZRenderLibExample/assets/logo.png`))
+const renderHudTriggerName = (ZCore.isLegacy) ? "RenderOverlay" : "RenderHudOverlay"
 register(renderHudTriggerName, (drawContext, event) => {
     [drawContext, event, partialTicks] = ZRenderLib.FixGUIRenderValues(drawContext, event)
     // ChatLib.chat(`Draw Context: ${drawContext}, Event: ${event}, Partial Ticks: ${partialTicks}`)
